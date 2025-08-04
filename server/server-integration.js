@@ -75,7 +75,19 @@ function startIntegratedServer() {
     if (!isDev || isBuiltApp) {
       const staticPath = path.join(__dirname, '..', 'client', 'dist');
       console.log('Serving static files from:', staticPath);
-      app.use(express.static(staticPath));
+      
+      // Configure static file serving with proper MIME types
+      app.use(express.static(staticPath, {
+        setHeaders: (res, path) => {
+          if (path.endsWith('.html')) {
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          } else if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+          } else if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css; charset=utf-8');
+          }
+        }
+      }));
     }
 
     // Import server routes with error handling

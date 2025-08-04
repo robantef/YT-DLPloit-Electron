@@ -16,8 +16,8 @@
     "electron": "electron .",
     "electron-dev": "NODE_ENV=development electron .",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder --dir",
-    "dist-all": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist-all": "npm run build && electron-builder",
     "start": "npm run dev"
   },
   "keywords": [

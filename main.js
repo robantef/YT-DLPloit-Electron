@@ -23,13 +23,27 @@ function createWindow() {
   });
 
   // Load the app
-  const isBuiltApp = __dirname.includes('dist-electron') || process.env.NODE_ENV === 'production';
-  const startUrl = (isDev && !isBuiltApp)
-    ? 'http://localhost:5173' 
-    : 'http://localhost:3001';
+  const isBuiltApp = __dirname.includes('app.asar') || __dirname.includes('dist-electron') || process.env.NODE_ENV === 'production';
+  
+  let startUrl;
+  if (isDev && !isBuiltApp) {
+    // Development mode - use Vite dev server
+    startUrl = 'http://localhost:5173';
+  } else {
+    // Production mode - use integrated server
+    startUrl = 'http://localhost:3001';
+  }
     
   console.log('Loading URL:', startUrl);
-  mainWindow.loadURL(startUrl);
+  
+  // Add a small delay to ensure server is ready
+  if (!isDev || isBuiltApp) {
+    setTimeout(() => {
+      mainWindow.loadURL(startUrl);
+    }, 1000);
+  } else {
+    mainWindow.loadURL(startUrl);
+  }
 
   // Add error handling for loading
   mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
@@ -52,23 +66,18 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  if (isDev) {
-    // Open DevTools in development
-    mainWindow.webContents.openDevTools();
-  } else {
-    // Also open DevTools in production for debugging
-    mainWindow.webContents.openDevTools();
-  }
+  // DevTools can be opened manually with Ctrl+Shift+I if needed
 }
 
 function startServer() {
   return new Promise((resolve, reject) => {
-    const isBuiltApp = __dirname.includes('dist-electron') || process.env.NODE_ENV === 'production';
+    const isBuiltApp = __dirname.includes('app.asar') || __dirname.includes('dist-electron') || process.env.NODE_ENV === 'production';
     
     console.log('Starting integrated server... isDev:', isDev, 'isBuiltApp:', isBuiltApp, '__dirname:', __dirname);
     
-    // Always start the integrated server in production mode
+    // Always start the integrated server when running packaged app
     if (!isDev || isBuiltApp) {
+      console.log('Starting integrated server...');
       startIntegratedServer()
         .then(() => {
           console.log('Integrated server started successfully!');
