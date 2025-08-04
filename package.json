@@ -1,0 +1,72 @@
+{
+  "name": "yt-dlploit-electron",
+  "version": "1.0.0",
+  "description": "YouTube Downloader with GUI - Electron App",
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"wait-on http://localhost:5173 && electron .\"",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "npm run build-client && npm run copy-server",
+    "build-client": "cd client && npm run build",
+    "copy-server": "npm run download-yt-dlp && node scripts/copy-server.js",
+    "download-yt-dlp": "node scripts/download-yt-dlp.js",
+    "electron": "electron .",
+    "electron-dev": "NODE_ENV=development electron .",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --dir",
+    "dist-all": "npm run build && electron-builder --dir",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "youtube",
+    "downloader",
+    "gui",
+    "yt-dlp",
+    "electron"
+  ],
+  "author": "",
+  "license": "ISC",
+  "build": {
+    "appId": "com.yourname.yt-dlploit",
+    "productName": "YT-DLPloit",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "main.js",
+      "client/dist/**/*",
+      "server/**/*",
+      "bin/**/*",
+      "!server/downloads/**/*",
+      "!server/node_modules/.cache/**/*"
+    ],
+    "asarUnpack": [
+      "server/**/*",
+      "bin/**/*"
+    ],
+    "win": {
+      "target": "dir"
+    },
+    "mac": {
+      "target": "dir"
+    },
+    "linux": {
+      "target": "dir"
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^37.2.5",
+    "electron-builder": "^24.13.3",
+    "wait-on": "^8.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "electron-is-dev": "^3.0.1",
+    "express": "^4.21.2"
+  }
+}
