@@ -1,4 +1,23 @@
-// server-integration.js - Integrated server for Electron main process
+// server-integration.js - Integrated server for Elefunction startIntegratedServer() {
+  return new Promise((resolve, reject) => {
+    const app = express();
+    app.use(cors());
+    app.use(bodyParser.json());
+
+    // Add error handling middleware
+    app.use((err, req, res, next) => {
+      console.error('Express error:', err);
+      res.status(500).json({ error: 'Internal server error', details: err.message });
+    });
+
+    // Serve static files from the built React app
+    const isBuiltApp = __dirname.includes('app.asar') || process.env.NODE_ENV === 'production';
+    if (!isDev || isBuiltApp) {
+      app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+    }
+
+    // Import server routes
+    require('./server-routes')(app, getYtDlpPath);cess
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -13,17 +32,9 @@ let serverInstance = null;
 function getYtDlpPath() {
   const isBuiltApp = __dirname.includes('app.asar') || process.env.NODE_ENV === 'production';
   
-  console.log('getYtDlpPath debug:');
-  console.log('- isDev:', isDev);
-  console.log('- isBuiltApp:', isBuiltApp);
-  console.log('- __dirname:', __dirname);
-  
   if (isDev && !isBuiltApp) {
     // In development, use bundled binary from project root
     const devBinaryPath = path.join(__dirname, '..', 'bin', 'yt-dlp.exe');
-    console.log('- devBinaryPath:', devBinaryPath);
-    console.log('- devBinaryExists:', fs.existsSync(devBinaryPath));
-    
     if (fs.existsSync(devBinaryPath)) {
       return `"${devBinaryPath}"`;
     }
@@ -46,8 +57,8 @@ function getYtDlpPath() {
     binaryPath = path.join(__dirname, '..', 'bin', binaryName);
   }
   
-  console.log('- binaryPath:', binaryPath);
-  console.log('- binaryExists:', fs.existsSync(binaryPath));
+  console.log('Trying binary path:', binaryPath);
+  console.log('Binary exists:', fs.existsSync(binaryPath));
   
   if (fs.existsSync(binaryPath)) {
     return `"${binaryPath}"`;
@@ -64,35 +75,19 @@ function startIntegratedServer() {
     app.use(cors());
     app.use(bodyParser.json());
 
-    // Add error handling middleware
-    app.use((err, req, res, next) => {
-      console.error('Express error:', err);
-      res.status(500).json({ error: 'Internal server error', details: err.message });
-    });
-
     // Serve static files from the built React app
-    const isBuiltApp = __dirname.includes('app.asar') || process.env.NODE_ENV === 'production';
+    const isBuiltApp = __dirname.includes('dist-electron') || process.env.NODE_ENV === 'production';
     if (!isDev || isBuiltApp) {
-      const staticPath = path.join(__dirname, '..', 'client', 'dist');
-      console.log('Serving static files from:', staticPath);
-      app.use(express.static(staticPath));
+      app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
     }
 
-    // Import server routes with error handling
-    try {
-      require('./server-routes')(app, getYtDlpPath);
-    } catch (error) {
-      console.error('Error loading server routes:', error);
-      reject(error);
-      return;
-    }
+    // Import server routes
+    require('./server-routes')(app, getYtDlpPath);
 
     // Serve React app for all other routes (in production)
     if (!isDev || isBuiltApp) {
       app.get('*', (req, res) => {
-        const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
-        console.log('Serving index.html from:', indexPath);
-        res.sendFile(indexPath);
+        res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
       });
     }
 

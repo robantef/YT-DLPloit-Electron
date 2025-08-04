@@ -48,7 +48,16 @@
       "bin/**/*"
     ],
     "win": {
-      "target": "dir"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "dir",
+          "arch": ["x64"]
+        }
+      ]
     },
     "mac": {
       "target": "dir"
