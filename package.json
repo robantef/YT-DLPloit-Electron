@@ -59,6 +59,15 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "YT-DLPloit",
+      "license": "LICENSE.txt"
+    },
     "mac": {
       "target": "dir"
     },

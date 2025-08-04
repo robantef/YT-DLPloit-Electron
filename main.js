@@ -17,7 +17,6 @@ function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false
     },
-    icon: path.join(__dirname, 'assets/icon.png'), // Add your app icon here
     titleBarStyle: 'default',
     show: false // Don't show until ready
   });

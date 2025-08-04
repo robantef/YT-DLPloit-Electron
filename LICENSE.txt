@@ -1,0 +1,31 @@
+YT-DLPloit - YouTube Video Downloader
+License Agreement
+
+Copyright (c) 2025 YT-DLPloit
+
+IMPORTANT - READ CAREFULLY: This License Agreement ("Agreement") is a legal agreement between you (either an individual or a single entity) and the developers of YT-DLPloit for the software product identified above, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("Software").
+
+BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT INSTALL OR USE THE SOFTWARE.
+
+SOFTWARE LICENSE
+
+1. GRANT OF LICENSE. This Agreement grants you the following rights:
+   - You may install and use the Software on a single computer.
+   - You may make backup copies of the Software for archival purposes.
+
+2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS.
+   - You may not reverse engineer, decompile, or disassemble the Software.
+   - You may not rent, lease, or lend the Software.
+   - You may not use the Software for any illegal purposes.
+
+3. TERMINATION. Without prejudice to any other rights, the developers may terminate this Agreement if you fail to comply with the terms and conditions of this Agreement.
+
+4. COPYRIGHT. The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties.
+
+5. NO WARRANTIES. The Software is provided "AS IS" without warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
+
+6. LIMITATION OF LIABILITY. In no event shall the developers be liable for any damages whatsoever arising out of the use of or inability to use the Software.
+
+7. YOUTUBE TERMS OF SERVICE. You acknowledge that downloading content from YouTube must comply with YouTube's Terms of Service. You are solely responsible for ensuring your use complies with all applicable terms and laws.
+
+By clicking "I Agree" below, you acknowledge that you have read this Agreement, understand it, and agree to be bound by its terms and conditions.
